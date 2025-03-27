@@ -1,10 +1,10 @@
 #######################################################################################################################################################
 # 
-# Name:
-# SID:
-# Exam Date:
-# Module:
-# Github link for this assignment:  
+# Name:Vaibhav Maheshwari
+# SID:750018329
+# Exam Date:27/01/2022
+# Module:BEMM458
+# Github link for this assignment:  https://github.com/UniversityExeterBusinessSchool/practiceassessment-thursday-VaibhavM888
 #
 # ######################################################################################################################################################
 # Instruction 1. Read the questions and instructions carefully and complete scripts.
@@ -119,4 +119,106 @@ plt.grid(True)
 plt.show()
 
 
+# Question 1 - Answer 
+# Initializing empty list to store the (start, end) locations 
+my_list = []
 
+# My allocated keys are 7 and 9 and words are 'resolve' and 'minor'
+my_SID_keys = [7, 9]
+
+# Iterating through the allocated keys
+for key in my_SID_keys:
+    # to get the word corresponding to the key (7: resolve & 9:minor) from the dictionary
+    SID_keyword = key_comments[key]
+    
+    # To find the starting location of the word in the customer_feedback string
+    starting_location = customer_feedback.find(SID_keyword)
+    
+    # If statement to find word and calculate the end location
+    if starting_location != -1:
+        end_location = starting_location + len(SID_keyword) - 1  # End location is start + length of word - 1 because it  starts from zero
+        # Append the tuple (start, end) to my_list
+        my_list.append((starting_location, end_location))
+
+# Print result
+print("List of (start, end) positions:", my_list)
+
+#Question 2 - Answer
+# First two digits of my ID number: 75
+# Last two digits of my ID number: 29
+
+# Operating Profit Margin = (Operating Profit / Revenue) * 100
+def calculate_operating_profit_margin(revenue, operating_profit):
+    if revenue == 0:  # to avoid division by zero and error
+        return "Revenue cannot be zero."
+    return (operating_profit / revenue) * 100
+
+# Revenue per Customer = Total Revenue / Total Customers
+def calculate_revenue_per_customer(total_revenue, total_customers):
+    if total_customers == 0:  # To avoid division by zero and error
+        return "Total customers cannot be zero."
+    return total_revenue / total_customers
+
+# Function to calculate Customer Churn Rate = (Customers Lost / Total Customers) * 100
+def calculate_customer_churn_rate(customers_lost, total_customers):
+    if total_customers == 0:  # To avoid division by zero and error
+        return "Total customers cannot be zero."
+    return (customers_lost / total_customers) * 100
+
+# Function to calculate Average Order Value = Total Revenue / Total Orders
+def calculate_average_order_value(total_revenue, total_orders):
+    if total_orders == 0:  # to avoid division by zero and error
+        return "Total orders cannot be zero."
+    return total_revenue / total_orders
+
+# Input Values using my ID digits 
+revenue = 75  # Input Values of revenue based on ID first two digits (75) because revenue !< operating profit
+operating_profit = 29  # Input Values of revenue based on ID last two digits
+total_customers = 8  # Total customers rounding off 7.5 to 8
+customers_lost = 3  # Customers lost rounding off 2.9 to 3
+total_orders = 10  # Total orders let say 10
+
+# Results
+operating_profit_margin = calculate_operating_profit_margin(revenue, operating_profit)
+print("Operating Profit Margin:", operating_profit_margin, "%") # % sign added to show percentage
+
+revenue_per_customer = calculate_revenue_per_customer(revenue, total_customers)
+print("Revenue per Customer:", revenue_per_customer) 
+
+customer_churn_rate = calculate_customer_churn_rate(customers_lost, total_customers)
+print("Customer Churn Rate:", customer_churn_rate, "%") # % sign added to show percentage
+
+average_order_value = calculate_average_order_value(revenue, total_orders)
+print("Average Order Value:", average_order_value)
+
+Question 3 - Answer
+import numpy as np
+from scipy.stats import linregress
+
+# Data: Price and Demand
+prices = np.array([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70])  # Prices are in £
+demand = np.array([300, 280, 260, 240, 210, 190, 160, 140, 120, 100, 85])  # Demand in units
+
+# Perform linear regression
+slope, intercept, r_value, p_value, std_err = linregress(prices, demand)
+
+# Calculate demand for a given price
+def cal_demand(price):
+    return slope * price + intercept
+
+# Calculate revenue for a given price
+def cal_revenue(price):
+    return price * cal_demand(price)
+
+# 1. Find the price that maximizes revenue
+# Prices in the range of 20 to 70 (inclusive)
+test_prices = np.arange(20, 71)  # Generate prices from 20 to 70
+revenues = [cal_revenue(price) for price in test_prices]
+max_revenue_price = test_prices[np.argmax(revenues)]  # Price with maximum revenue
+
+# 2. Find the demand when the price is set at £52
+demand_at_52 = cal_demand(52)
+
+# Results
+print("Price that maximizes revenue: £", max_revenue_price)
+print("Demand when price is set at £52:", demand_at_52)
